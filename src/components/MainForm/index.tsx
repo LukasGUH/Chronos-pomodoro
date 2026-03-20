@@ -1,5 +1,6 @@
-import { PlayCircleIcon, StopCircleIcon} from "lucide-react";
+import { PlayCircleIcon, StopCircleIcon } from "lucide-react";
 import { useRef } from "react";
+import { showMessage } from "../../adapters/showMassage";
 import { TaskActionTypes } from "../../contexts/TaskContext/taskActions";
 import { useTaskContext } from "../../contexts/TaskContext/useTaskContext";
 import type { TaskModel } from "../../models/TaskModel";
@@ -13,19 +14,21 @@ import { Tips } from "../Tips";
 export function MainForm() {
     const { state, dispatch } = useTaskContext()
     const taskNameInput = useRef<HTMLInputElement>(null)
+    const lastTaskName = state.tasks[state.tasks.length - 1]?.name || ""
 
     const nextCycle = getNextCycle(state.currentCycle)
     const nextCycleType = getNextCycleType(nextCycle)
 
     function handleCreateNewTask(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
+        showMessage.dissmiss()
 
         if (taskNameInput.current === null) return
 
         const taskName = taskNameInput.current.value.trim()
 
         if (!taskName) {
-            alert('Digite o nome da tarefa')
+            showMessage.warning('Digite o nome da tarefa')
             return
         }
 
@@ -40,9 +43,13 @@ export function MainForm() {
         }
 
         dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
+
+        showMessage.success("Tarefa iniciada com sucesso!")
     }
 
     function handleInterruptTask() {
+        showMessage.dissmiss()
+        showMessage.error("Tarefa interrompida.")
         dispatch({ type: TaskActionTypes.INTERRUPT_TASK })
     }
 
@@ -56,6 +63,7 @@ export function MainForm() {
                     placeholder="Digite algo"
                     ref={taskNameInput}
                     disabled={!!state.activeTask}
+                    defaultValue={lastTaskName}
                 />
             </div>
             <div className="formRow">

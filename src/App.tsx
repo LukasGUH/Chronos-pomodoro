@@ -1,14 +1,16 @@
-import { Home } from "./pages/Home"
+import { MessagesContainer } from "./components/MassagesContainer"
 import { TaskContextProvider } from "./contexts/TaskContext/taskContextProvider"
+import { MainRouter } from "./routers/MainRouter"
 
-import "./styles/theme.css"
 import "./styles/global.css"
-
+import "./styles/theme.css"
 
 export function App() {
     return (
         <TaskContextProvider>
-            <Home/>
+            <MessagesContainer>
+                <MainRouter />
+            </MessagesContainer>
         </TaskContextProvider>
     )
 
