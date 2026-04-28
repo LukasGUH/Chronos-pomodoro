@@ -4,6 +4,7 @@ import { AboutPomodoro } from "../../pages/AboutPomodoro";
 import { History } from "../../pages/History";
 import { Home } from "../../pages/Home";
 import { NotFound } from "../../pages/NotFound";
+import { Settings } from "../../pages/Settings";
 
 function ScrollToTop() {
     const { pathname } = useLocation()
@@ -22,6 +23,7 @@ export function MainRouter() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about-pomodoro" element={<AboutPomodoro />} />
                 <Route path="/history/" element={<History />} />
+                <Route path="/settings/" element={<Settings />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
             <ScrollToTop />
